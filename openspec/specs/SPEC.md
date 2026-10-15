@@ -319,6 +319,21 @@ copperhead mcp [--repo <path>]            # EXPERIMENTAL
     server opens no network transport, and LLM calls happen exactly where
     the CLI already makes them.
 
+copperhead review [design] --out <dir> [--source …] [--fab …] [--fab-profile <file>]
+                  [--domains P,M,S,F,L,R,G,B] [--parallel n] [--resume]   # EXPERIMENTAL
+    Grounded design review (RFC 17). copperhead-tools' deterministic sweep runs
+    first over the design and any fabrication outputs; then one model pass per
+    domain reads a closed, hashed bundle through read-only queries and returns
+    proposals (facts, quotations, measurements, calculations, findings,
+    questions); copperhead-tools' verifiers decide each one, and the report is
+    rendered from what they decided. Never writes the design. `--replay <dir>`
+    re-verifies a record's stored proposals with no model and must reproduce
+    its report byte for byte, run from the directory the review ran in
+    (copperhead-tools runs there); `--resume` continues a record a killed or
+    cancelled run left. Exits 0, or 2 when the report was written but a pass
+    failed; 1 on an error or a replay that differs; 130 or 143 when cancelled
+    by SIGINT or SIGTERM.
+
 copperhead explain <refdes|net|pin>       # stretch
     Answer "why is R7 here?" from docs + schematic context.
 
